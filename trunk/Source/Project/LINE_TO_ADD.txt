@@ -1,0 +1,4 @@
+glew32.lib
+glu32.lib
+opengl32.lib
+../../lib/devIL.lib
