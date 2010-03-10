@@ -41,6 +41,7 @@ class ToonScene: public AbstractScene
 		//Pre display (for FBO/lights and such...)
 		virtual void preRender();
 		virtual void render();
+
 		
 		virtual void update(); 
 		virtual bool isFinished();
@@ -49,7 +50,8 @@ class ToonScene: public AbstractScene
 		virtual void reset();
 
 	private:
-		GLfloat*	m_fLightPosition;
+
+		FBO* m_pDepthMapFBO;
 
 		float fAngle;
 
@@ -68,6 +70,8 @@ class ToonScene: public AbstractScene
 		int depBallSignX;
 		int depBallSignY;
 		int depBallSignZ;
+
+		void renderEnvironment();
 
 };
 
