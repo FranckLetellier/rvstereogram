@@ -12,12 +12,12 @@ void AbstractCamera::init()
 {
 
 	pos.x() = 0;
-	pos.y() = 2;
-	pos.z() = 5;
+	pos.y() = 0;
+	pos.z() = 0;
 
 	aim.x() = 0;
 	aim.y() = 0;
-	aim.z() = 0;
+	aim.z() = 5;
 
 	up.x() = 0;
 	up.y() = 1;
