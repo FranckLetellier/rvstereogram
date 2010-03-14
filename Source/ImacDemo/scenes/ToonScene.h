@@ -46,7 +46,7 @@ class ToonScene: public AbstractScene
 		virtual void update(); 
 		virtual bool isFinished();
 		virtual void handleKeyUp(unsigned char c, int x, int y);
-		virtual void handleKeyDown(unsigned char c, int x, int y){};
+		virtual void handleKeyDown(unsigned char c, int x, int y);
 		virtual void reset();
 
 	private:
@@ -54,22 +54,16 @@ class ToonScene: public AbstractScene
 		FBO* m_pDepthMapFBO;
 
 		float fAngle;
+		float fSpeedUp;
 
-		float depBallSpeedX;
-		float depBallSpeedY;
-		float depBallSpeedZ;
+		float fRotation;
 
-		float depBallAttX;
-		float depBallAttY;
-		float depBallAttZ;
+		float fLeftStrenght;
+		float fRightStrenght;
 
-		float depBallX;
-		float depBallY;
-		float depBallZ;
-
-		int depBallSignX;
-		int depBallSignY;
-		int depBallSignZ;
+		bool bRotateLeft;
+		bool bRotateRight;
+		bool bSpeedUp;
 
 		void renderEnvironment();
 
