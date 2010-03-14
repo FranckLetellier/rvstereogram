@@ -317,8 +317,4 @@ bool AbstractScene::globalInit(int windowWidth, int windowHeight){
 
 void AbstractScene::handleKeyUp(unsigned char c, int x, int y)
 {
-	switch (c)
-	{
-
-	}
 }
