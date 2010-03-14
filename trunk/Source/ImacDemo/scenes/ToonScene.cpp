@@ -27,7 +27,7 @@ bool ToonScene::init()
 {
 
 	glDisable(GL_BLEND);
-
+	//glEnable(GL_CULL_FACE);
 	ShaderManager & shaderManager = ShaderManager::getInstance();
 	MeshManager & meshManager = MeshManager::getInstance();
 
@@ -35,26 +35,7 @@ bool ToonScene::init()
 
 	srand ( time(NULL) );
 
-
-	meshManager.loadMesh("teapot.obj");
 	meshManager.loadMesh("boule.obj");
-
-	depBallX = 0.0;
-	depBallY = 0.0;
-	depBallZ = 0.0;
-	
-	depBallSignX = 1;
-	depBallSignY = -1;
-	depBallSignZ = 1;
-
-	depBallAttX = 1;
-	depBallAttY = 1;
-	depBallAttZ = 1;
-
-
-	depBallSpeedX = 0.01 + (rand()%10)/1000.0;
-	depBallSpeedY = 0.01 + (rand()%10)/1000.0;
-	depBallSpeedZ = 0.01 + (rand()%10)/1000.0;
 
 	m_pDepthMapFBO = new FBO(iWindowWidth,iWindowHeight,E_FBO_2D);
 	m_pDepthMapFBO->generateDepthOnly();
@@ -97,6 +78,8 @@ void ToonScene::render(){
 	m_pDepthMapFBO->desactivateTexture();
 	shaderManager.getShader("filters")->Desactivate();
 
+	//renderEnvironment();
+
 
 }
 
@@ -105,27 +88,19 @@ void ToonScene::renderEnvironment()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	MeshManager & meshManager = MeshManager::getInstance();
-	ShaderManager & shaderManager = ShaderManager::getInstance();
-
-	glColor3f(0.0,0.0,0.0);
-
-
-	/*glPushMatrix();
-		glTranslatef(0,0,0);
-		glRotatef(55.0,1.0,1.0,0.0);
-		glScalef(0.08,0.08,0.08);
-		glDisable(GL_CULL_FACE);
-		meshManager.getMesh("teapot.obj")->Draw();
-		glEnable(GL_CULL_FACE);
-	glPopMatrix();*/
+	glColor3f(0.0,0.0,1.0);
 
 	glPushMatrix();
-		glTranslatef(0,-5,0);
+		glRotatef(fRotation,0.0,0.0,1.0);
 		glRotatef(fAngle,1.0,0.0,0.0);
-		glScalef(0.08,0.08,0.08);
-		glDisable(GL_CULL_FACE);
+		glScalef(2.5,2.5,2.5);
 		meshManager.getMesh("boule.obj")->Draw();
-		glEnable(GL_CULL_FACE);
+	glPopMatrix();
+
+	glColor3f(1.0,0.0,1.0);
+	glPushMatrix();
+		glTranslatef(0,10.3,0);
+		glutSolidSphere(0.3,10,10);
 	glPopMatrix();
 
 }
@@ -134,23 +109,74 @@ void ToonScene::update()
 {
 	AbstractScene::update();
 
-	fAngle += 0.3;
+	if(bRotateLeft){
+		if(fLeftStrenght < 1.0) fLeftStrenght += 0.1;
+		
+	}
+	else{
+		if(fLeftStrenght > 0.0) fLeftStrenght -= 0.05;
+	}
+	if(bRotateRight){
+		if(fRightStrenght < 1.0) fRightStrenght += 0.1;
+		
+	}
+	else{
+		if(fRightStrenght > 0.0) fRightStrenght -= 0.05;
+	}
+
+	fRotation += 0.8 * fRightStrenght - 0.8 * fLeftStrenght;
+
+
+	if(bSpeedUp){
+		if(fSpeedUp < 1.0) fSpeedUp += 0.1;
+	}
+	else{
+		if(fSpeedUp > 0.0) fSpeedUp -= 0.05;
+	}
+
+	fAngle += 0.2 + 0.5 * fSpeedUp;
 
 }
 
 bool ToonScene::isFinished()
 {
-	if (m_pCam->getCurrentControlPoint() == 5)
-	{
-		///going back to outdoor
-		return true;
-	}
 	return false;
 }
 
 void ToonScene::handleKeyUp(unsigned char c, int x, int y)
 {
 	AbstractScene::handleKeyUp(c,x,y);
+
+	switch(c){
+		case 'q' :
+			bRotateLeft = false;
+		break;
+
+		case 'd' :
+			bRotateRight = false;
+		break;
+		case 'z' :
+			bSpeedUp = false;
+		break;
+	}
+ 
+}
+
+void ToonScene::handleKeyDown(unsigned char c, int x, int y){
+
+	switch(c){
+		case 'q' :
+			if(!bRotateLeft) bRotateLeft = true;
+		break;
+
+		case 'd' :
+			if(!bRotateRight) bRotateRight = true;
+		break;
+		case 'z' :
+			bSpeedUp = true;
+		break;
+	}
+
 }
 
 void ToonScene::reset()
@@ -158,21 +184,8 @@ void ToonScene::reset()
 
 	AbstractScene::reset();
 
-	depBallX = 0.0;
-	depBallY = 0.0;
-	depBallZ = 0.0;
-	
-	depBallSignX = 1;
-	depBallSignY = -1;
-	depBallSignZ = 1;
+	fAngle = fRotation = fLeftStrenght = fRightStrenght = fSpeedUp = 0.0;
 
-	depBallAttX = 1;
-	depBallAttY = 1;
-	depBallAttZ = 1;
-
-
-	depBallSpeedX = 0.01 + (rand()%10)/1000.0;
-	depBallSpeedY = 0.01 + (rand()%10)/1000.0;
-	depBallSpeedZ = 0.01 + (rand()%10)/1000.0;
+	bRotateLeft = bRotateRight = bSpeedUp = false;
 
 }

@@ -320,8 +320,5 @@ void AbstractScene::handleKeyUp(unsigned char c, int x, int y)
 	switch (c)
 	{
 
-	case 'f' :
-		m_bUseDOF = m_bUseDOF ? false : true;
-		break;
 	}
 }

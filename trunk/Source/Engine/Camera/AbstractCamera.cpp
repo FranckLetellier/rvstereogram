@@ -17,7 +17,7 @@ void AbstractCamera::init()
 
 	aim.x() = 0;
 	aim.y() = 0;
-	aim.z() = 5;
+	aim.z() = 0;
 
 	up.x() = 0;
 	up.y() = 1;

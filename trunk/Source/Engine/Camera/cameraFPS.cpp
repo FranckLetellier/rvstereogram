@@ -20,6 +20,10 @@ void CameraFPS::init()
 
 	vitesseSouris = 0.1f;
 
+	pos.x() = 0;
+	pos.y() = 9.4;
+	pos.z() = 5.0;
+
 	alpha=0;
 	phi=-90;
 
@@ -49,8 +53,6 @@ void CameraFPS::vectorsFromAngles(){
 
 void CameraFPS::update(){
 
-
-	//std::cout<<pos.x() <<" / "<<pos.y()<< " / "<<pos.z()<<std::endl;
 	if(m_bForward){
 		pos.x()+=m_fSpeed*direct.x();
 		pos.y()+=m_fSpeed*direct.y();

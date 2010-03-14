@@ -130,7 +130,7 @@ switch(c){
 			glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
 		break;
 
-	case 'z' :
+	/*case 'z' :
 		cam->setFlag(E_CAMERA_FORWARD,true);
 	break;
 	
@@ -144,10 +144,10 @@ switch(c){
 
 	case 'd' :
 		cam->setFlag(E_CAMERA_RIGHT,true);
-	break;
+	break;*/
 	
-	default:
-    break;
+	//default:
+    //break;
   }
 
 }
@@ -158,7 +158,7 @@ static void keyboardUpGL(unsigned char c, int x, int y)
 	SceneManager::getInstance().handleKeyUp(c,x,y);
 
 switch(c){ 
-	case 'z' :
+		/*case 'z' :
 		cam->setFlag(E_CAMERA_FORWARD,false);
 	    break;
 	
@@ -172,9 +172,9 @@ switch(c){
 
 		case 'd' :
 		cam->setFlag(E_CAMERA_RIGHT,false);
-		break;
+		break;*/
 
-		case 'g' :
+		/*case 'g' :
 			if(!EffectManager::getInstance().isQueued("greyScale"))
 				EffectManager::getInstance().queueEffect("greyScale");
 			else
@@ -197,12 +197,12 @@ switch(c){
 
 		case 'n' :
 			EffectManager::getInstance().clearQueue();
-		break;
+		break;*/
 
 		
 	
-	default:
-    break;
+	//default:
+    //break;
   }
 
 
@@ -220,12 +220,12 @@ static void mouseGL(int button, int state, int x, int y)
 
 static void motionGL(int x, int y)
 {
-	cam->updateMouse(x,y);	
+	//cam->updateMouse(x,y);	
 }
 
 static void passiveMotionGL(int x, int y)
 {
-	cam->updateMouse(x,y);
+	//cam->updateMouse(x,y);
 }
 
 
