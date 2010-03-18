@@ -77,6 +77,7 @@ class AbstractScene
 		static unsigned int iWindowHeight;
 		
 		static bool m_bUseDOF;
+		GLuint m_iSIRDS;
 		
 		glh::matrix4f m_pProjectionMatrix;
 		glh::matrix4f m_pModelviewMatrix;

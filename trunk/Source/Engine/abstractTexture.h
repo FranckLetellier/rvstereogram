@@ -15,6 +15,7 @@
 #include <string>
 #include <iostream>
 
+#include <GL/glew.h>
 #include <GL/glut.h>
 #include <GL/glu.h>
 
@@ -40,6 +41,7 @@ class AbstractTexture
 		*/
 		virtual bool loadTexture(const std::string& name) = 0;
 		virtual bool loadTexture(GLenum target, const std::string& name) = 0;
+		
 		virtual void activate() = 0;
 		virtual void desactivate() = 0;
 
