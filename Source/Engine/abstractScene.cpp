@@ -7,6 +7,7 @@
 
 #include "abstractEffect.h"
 #include "effectManager.h"
+#include "imageTool.h"
 
 //static members
 
@@ -161,8 +162,17 @@ void AbstractScene::display(){
 			
 	finalFBO->desactivate();
 		
+	ImageTool::SIRDS(finalFBO,200,m_iSIRDS);
 
-	//-----------------------------------------------Post Processing
+	//finalFBO->activateTexture();//activate();
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D,m_iSIRDS);
+		displayOnQuad(iWindowWidth,iWindowHeight);
+		glBindTexture(GL_TEXTURE_2D,0);
+		
+	//finalFBO->desactivateTexture();
+
+	/*//-----------------------------------------------Post Processing
 
 	//activate final color and depth textures
 	glActiveTexture(GL_TEXTURE0);
@@ -224,7 +234,7 @@ void AbstractScene::display(){
 	glActiveTexture(GL_TEXTURE0);
 	finalFBO->desactivateTexture();
 	
-	shaderManager.getShader("filters")->Desactivate();
+	shaderManager.getShader("filters")->Desactivate();*/
 }
 
 bool AbstractScene::globalInit(int windowWidth, int windowHeight){

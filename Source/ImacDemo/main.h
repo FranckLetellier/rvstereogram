@@ -33,8 +33,8 @@ static const unsigned int windowx = 100;
 static const unsigned int windowy = 100;
 
 // Dimensions de la fenetre
-static unsigned int windowwidth  = 1024;
-static unsigned int windowheight = 768;
+static unsigned int windowwidth  = 640;
+static unsigned int windowheight = 480;
 
 float near = 0.4f;
 float far = 1000.0f;
