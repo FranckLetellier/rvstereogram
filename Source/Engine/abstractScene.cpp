@@ -41,7 +41,7 @@ AbstractScene::AbstractScene(const std::string& sName, AbstractCamera*	cam):
 m_sName(sName),
 m_pCam(cam)
 {
-
+	m_bStereo = true;
 	
 }
 
@@ -158,18 +158,33 @@ void AbstractScene::display(){
 		//The final scene is render into the final FBO
 	finalFBO->activate();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		render();
-			
+		render();			
 	finalFBO->desactivate();
-		
-	ImageTool::SIRDS(finalFBO,200,m_iSIRDS);
 
-	//finalFBO->activateTexture();//activate();
+	if(m_bStereo){	
+		ImageTool::SIRDS(finalFBO,200,m_iSIRDS);
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D,m_iSIRDS);
 		displayOnQuad(iWindowWidth,iWindowHeight);
 		glBindTexture(GL_TEXTURE_2D,0);
+	}
+	else{
+
+		glActiveTexture(GL_TEXTURE0);
+		finalFBO->activateTexture();
+		shaderManager.getShader("filters")->Activate();
+		shaderManager.getShader("filters")->setUniformi("choix",0);
+
+		displayOnQuad(iWindowWidth,iWindowHeight);
 		
+		shaderManager.getShader("filters")->Desactivate();
+
+		glActiveTexture(GL_TEXTURE0);
+		finalFBO->desactivateTexture();
+		
+		shaderManager.getShader("filters")->Desactivate();
+
+	}
 	//finalFBO->desactivateTexture();
 
 	/*//-----------------------------------------------Post Processing
@@ -325,6 +340,15 @@ bool AbstractScene::globalInit(int windowWidth, int windowHeight){
 
 
 
-void AbstractScene::handleKeyUp(unsigned char c, int x, int y)
-{
+void AbstractScene::handleKeyUp(unsigned char c, int x, int y){
+
+	switch(c){
+
+		case 's' :
+		case 'S' : 
+			m_bStereo = m_bStereo ? false : true;
+		break;
+
+	}
+
 }
