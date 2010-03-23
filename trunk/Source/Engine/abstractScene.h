@@ -78,7 +78,9 @@ class AbstractScene
 		
 		static bool m_bUseDOF;
 		GLuint m_iSIRDS;
-		
+	
+		bool m_bStereo;
+
 		glh::matrix4f m_pProjectionMatrix;
 		glh::matrix4f m_pModelviewMatrix;
 		glh::matrix4f m_pPreviousProjectionMatrix;
