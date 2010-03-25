@@ -57,6 +57,7 @@ class ToonScene: public AbstractScene
 		float fSpeedUp;
 
 		float fRotation;
+		float fRotationPiou;
 
 		float fLeftStrenght;
 		float fRightStrenght;

@@ -27,7 +27,7 @@ bool ToonScene::init()
 {
 
 	glDisable(GL_BLEND);
-	//glEnable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE);
 	ShaderManager & shaderManager = ShaderManager::getInstance();
 	MeshManager & meshManager = MeshManager::getInstance();
 
@@ -48,16 +48,9 @@ void ToonScene::preRender()
 {
 
 	m_pDepthMapFBO->activate();
-		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
-
 		renderEnvironment();
-
 	m_pDepthMapFBO->desactivate();
-
-	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 
 }
 
@@ -79,9 +72,6 @@ void ToonScene::render(){
 	m_pDepthMapFBO->desactivateTexture();
 	shaderManager.getShader("filters")->Desactivate();
 
-	//renderEnvironment();
-
-
 }
 
 void ToonScene::renderEnvironment()
@@ -97,11 +87,10 @@ void ToonScene::renderEnvironment()
 		meshManager.getMesh("boule.obj")->Draw();
 	glPopMatrix();
 
-	glColor3f(1.0,0.0,1.0);
 	glPushMatrix();
 		glTranslatef(0,9.3,4);		
 		glRotatef(-90,1,0,0);
-		glRotatef(fRotation,0,1,0);
+		glRotatef(fRotationPiou,0,1,0);
 		glScalef(0.5,0.5,0.5);
 		meshManager.getMesh("pioupiou.obj")->Draw();
 	glPopMatrix();
@@ -130,6 +119,8 @@ void ToonScene::update()
 	fRotation += 0.8 * fRightStrenght - 0.8 * fLeftStrenght;
 	if(fRotation > 33.0) fRotation = 33.0;
 	else if(fRotation < -33.0) fRotation = -33.0;
+
+	fRotationPiou = 33.0 * fRightStrenght - 33.0 * fLeftStrenght;
 
 	if(bSpeedUp){
 		if(fSpeedUp < 1.0) fSpeedUp += 0.1;
@@ -186,9 +177,11 @@ void ToonScene::handleKeyDown(unsigned char c, int x, int y){
 void ToonScene::reset()
 {
 
+	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+
 	AbstractScene::reset();
 
-	fAngle = fRotation = fLeftStrenght = fRightStrenght = fSpeedUp = 0.0;
+	fAngle = fRotation = fLeftStrenght = fRightStrenght = fSpeedUp  = fRotationPiou = 0.0;
 
 	bRotateLeft = bRotateRight = bSpeedUp = false;
 
