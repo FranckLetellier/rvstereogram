@@ -42,6 +42,7 @@ m_sName(sName),
 m_pCam(cam)
 {
 	m_bStereo = true;
+	m_bTexture = false;
 	
 }
 
@@ -161,12 +162,16 @@ void AbstractScene::display(){
 		render();			
 	finalFBO->desactivate();
 
-	if(m_bStereo){	
-		ImageTool::SIRDS(finalFBO,200,m_iSIRDS);
+	if(m_bStereo){
+		if (m_bTexture)
+			ImageTool::SITS(finalFBO,200,m_iSIRDS);
+		else
+			ImageTool::SIRDS(finalFBO,200,m_iSIRDS);
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D,m_iSIRDS);
 		displayOnQuad(iWindowWidth,iWindowHeight);
 		glBindTexture(GL_TEXTURE_2D,0);
+		
 	}
 	else{
 
@@ -347,6 +352,10 @@ void AbstractScene::handleKeyUp(unsigned char c, int x, int y){
 		case 's' :
 		case 'S' : 
 			m_bStereo = m_bStereo ? false : true;
+		break;
+		case 'x' :
+		case 'X' : 
+			m_bTexture = m_bTexture ? false : true;
 		break;
 
 	}
