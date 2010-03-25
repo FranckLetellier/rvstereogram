@@ -80,6 +80,7 @@ class AbstractScene
 		GLuint m_iSIRDS;
 	
 		bool m_bStereo;
+		bool m_bTexture;
 
 		glh::matrix4f m_pProjectionMatrix;
 		glh::matrix4f m_pModelviewMatrix;
